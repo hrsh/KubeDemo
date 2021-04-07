@@ -27,6 +27,10 @@ namespace KubeDemo.Api.Controllers
             return t;
         }
 
+        [HttpGet("{id}")]
+        public async Task<SkillEntity> GetSkill(Guid id, CancellationToken ct) =>
+            await _repository.GetSkillAsync(id, ct);
+
         [HttpPost]
         public async Task<IActionResult> CreateSkill(
             [FromBody] SkillAddDto model,

@@ -1,7 +1,11 @@
 @url = https://localhost:5001
+@id = 6bc23ac1-2954-4183-aa15-64317fc9b38b
 
 ###
 GET {{url}}/api/skill
+
+###
+GET {{url}}/api/skill/{{id}}
 
 ###
 POST {{url}}/api/skill

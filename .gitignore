@@ -365,3 +365,4 @@ FodyWeavers.xsd
 # Custom file extensions
 *.txt
 *.sh
+*.rest
