@@ -2,12 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KubeDemo.Api.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Driver;
 
 namespace KubeDemo.Api
 {
@@ -20,8 +25,21 @@ namespace KubeDemo.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
+            BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
+
             services.Configure<MongoDbOptions>(
                 _configuration.GetSection(nameof(MongoDbOptions)));
+
+            services.AddSingleton<IMongoClient>(s =>
+            {
+                var options = _configuration
+                    .GetSection(nameof(MongoDbOptions))
+                    .Get<MongoDbOptions>();
+                return new MongoClient(options.ConnectionString);
+            });
+
+            services.AddSingleton<IMongoRepository, MongoRepository>();
 
             services.AddControllers();
         }

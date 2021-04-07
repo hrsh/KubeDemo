@@ -1,4 +1,11 @@
+using KubeDemo.Api.Dtos;
+using KubeDemo.Api.Entities;
+using KubeDemo.Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace KubeDemo.Api.Controllers
 {
@@ -6,6 +13,34 @@ namespace KubeDemo.Api.Controllers
     [Route("api/[controller]")]
     public class SkillController : ControllerBase
     {
-        [HttpGet, Route("~/")] public string Index() => nameof(SkillController);
+        private readonly IMongoRepository _repository;
+
+        public SkillController(IMongoRepository repository)
+        {
+            _repository = repository;
+        }
+
+        [HttpGet]
+        public IEnumerable<SkillEntity> GetSkills()
+        {
+            var t = _repository.GetSkills();
+            return t;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateSkill(
+            [FromBody] SkillAddDto model,
+            CancellationToken ct)
+        {
+            var entity = new SkillEntity
+            {
+                Id = Guid.NewGuid(),
+                Name = model.Name,
+                YearsOfExperience = model.YearsOfExperience,
+                Level = model.Level
+            };
+            await _repository.Create(entity, ct);
+            return Ok();
+        }
     }
 }

@@ -1,0 +1,14 @@
+@url = https://localhost:5001
+
+###
+GET {{url}}/api/skill
+
+###
+POST {{url}}/api/skill
+content-type: application/json
+
+{
+    "name": "Programming in tcl (for OpenSees)",
+    "yearsOfExperience": 5,
+    "level": 50
+}
