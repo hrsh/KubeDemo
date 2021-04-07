@@ -21,9 +21,9 @@ namespace KubeDemo.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<SkillEntity> GetSkills()
+        public async Task<IEnumerable<SkillEntity>> GetSkills(CancellationToken ct)
         {
-            var t = _repository.GetSkills();
+            var t = await _repository.GetSkillsAsync(ct);
             return t;
         }
 

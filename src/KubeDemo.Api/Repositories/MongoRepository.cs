@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
+using MongoDB.Bson;
 
 namespace KubeDemo.Api.Repositories
 {
@@ -16,7 +17,7 @@ namespace KubeDemo.Api.Repositories
 
         Task<SkillEntity> GetSkillAsync(Guid id, CancellationToken ct = default);
 
-        List<SkillEntity> GetSkills();
+        Task<List<SkillEntity>> GetSkillsAsync(CancellationToken ct = default);
     }
 
     public class MongoRepository : IMongoRepository
@@ -40,13 +41,10 @@ namespace KubeDemo.Api.Repositories
             _skillCollection = database.GetCollection<SkillEntity>(_collection);
         }
 
-        public List<SkillEntity> GetSkills() =>
-            _skillCollection
-                .AsQueryable()
-                .OrderByDescending(a => a.Level)
-                .Skip(0)
-                .Take(128)
-                .ToList();
+        public async Task<List<SkillEntity>> GetSkillsAsync(CancellationToken ct = default) =>
+            await _skillCollection
+                .Find(new BsonDocument())
+                .ToListAsync(ct);
 
         public async Task<SkillEntity> GetSkillAsync(
             Guid id,
