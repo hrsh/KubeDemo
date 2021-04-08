@@ -1,5 +1,5 @@
 @url = https://localhost:5001
-@id = 6bc23ac1-2954-4183-aa15-64317fc9b38b
+@id = 7f0e1e0c-382c-494f-a89c-b7e635da2652
 
 ###
 GET {{url}}/api/skill
@@ -16,3 +16,9 @@ content-type: application/json
     "yearsOfExperience": 5,
     "level": 50
 }
+
+###
+GET {{url}}/hc/live
+
+###
+GET {{url}}/hc/ready

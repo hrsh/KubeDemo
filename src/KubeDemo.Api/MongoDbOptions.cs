@@ -8,6 +8,9 @@ namespace KubeDemo.Api
 
         public string Password { get; set; }
 
-        public string ConnectionString => $"mongodb://{Host}:{Port}";
+        public string User { get; set; }
+
+        public string ConnectionString =>
+            $"mongodb://{User}:{Password}@{Host}:{Port}";
     }
 }
