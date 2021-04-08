@@ -1,4 +1,4 @@
-@url = https://localhost:5001
+@url = http://localhost:8080
 @id = 7f0e1e0c-382c-494f-a89c-b7e635da2652
 
 ###
@@ -12,9 +12,9 @@ POST {{url}}/api/skill
 content-type: application/json
 
 {
-    "name": "Programming in tcl (for OpenSees)",
-    "yearsOfExperience": 5,
-    "level": 50
+    "name": "Programming in C#",
+    "yearsOfExperience": 17,
+    "level": 75
 }
 
 ###
