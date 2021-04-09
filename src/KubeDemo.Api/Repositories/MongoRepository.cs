@@ -36,6 +36,7 @@ namespace KubeDemo.Api.Repositories
         {
             _logger = logger;
             _options = options.Value;
+            _logger.LogCritical($"mongo connection string: {options.Value.ConnectionString}");
 
             var database = mongoClient.GetDatabase(_database);
             _skillCollection = database.GetCollection<SkillEntity>(_collection);
